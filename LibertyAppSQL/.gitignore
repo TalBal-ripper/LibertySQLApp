@@ -1,0 +1,43 @@
+.gradle
+build/
+!gradle/wrapper/gradle-wrapper.jar
+!**/LibertyAppSQL/src/main/**/build/
+!**/LibertyAppSQL/src/test/**/build/
+/LibertyAppSQL/.kotlin
+
+### IntelliJ IDEA ###
+/LibertyAppSQL/.idea/modules.xml
+/LibertyAppSQL/.idea/jarRepositories.xml
+/LibertyAppSQL/.idea/compiler.xml
+/LibertyAppSQL/.idea/libraries/
+/LibertyAppSQL/*.iws
+/LibertyAppSQL/*.iml
+/LibertyAppSQL/*.ipr
+/LibertyAppSQL/out/
+!**/LibertyAppSQL/src/main/**/out/
+!**/LibertyAppSQL/src/test/**/out/
+
+### Eclipse ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+bin/
+!**/src/main/**/bin/
+!**/src/test/**/bin/
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+### VS Code ###
+/LibertyAppSQL/.vscode/
+
+### Mac OS ###
+.DS_Store
