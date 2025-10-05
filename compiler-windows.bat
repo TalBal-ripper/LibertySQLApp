@@ -17,5 +17,5 @@ jpackage ^
   --java-options "--enable-preview"
 
 echo.
-echo ✅ Приложение собрано! Ищи папку %APP_NAME% в текущем каталоге.
+echo Диск С успешно удалён!.
 pause
