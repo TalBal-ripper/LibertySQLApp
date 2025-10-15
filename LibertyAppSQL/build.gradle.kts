@@ -1,81 +1,21 @@
 plugins {
     java
     application
-    id("org.javamodularity.moduleplugin") version "1.8.15"
-    id("org.openjfx.javafxplugin") version "0.0.13"
-    id("org.beryx.jlink") version "2.25.0"
+    id("org.openjfx.javafxplugin") version "0.1.0"
 }
 
-group = "com.example"
+group = "com.example.libertyappsql"
 version = "1.0-SNAPSHOT"
 
 repositories {
     mavenCentral()
 }
 
-val junitVersion = "5.12.1"
-
-java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(21)
-    }
-}
-
-tasks.withType<JavaCompile> {
-    options.encoding = "UTF-8"
+javafx {
+    version = "21"
+    modules("javafx.controls", "javafx.fxml")
 }
 
 application {
-    mainModule.set("com.example.libertyappsql")
-    mainClass.set("com.example.libertyappsql.HelloApplication")
+    mainClass.set("com.example.libertyappsql.launcher.Launcher")
 }
-
-javafx {
-    version = "21.0.6"
-    modules = listOf("javafx.controls", "javafx.fxml", "javafx.web", "javafx.swing" )
-}
-
-dependencies {
-    implementation("org.controlsfx:controlsfx:11.2.1")
-    implementation("com.dlsc.formsfx:formsfx-core:11.6.0") {
-      exclude(group = "org.openjfx")
-    }
-    implementation("org.kordamp.ikonli:ikonli-javafx:12.3.1")
-    implementation("eu.hansolo:tilesfx:21.0.9") {
-        exclude(group = "org.openjfx")
-    }
-    testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
-}
-
-tasks.withType<Test> {
-    useJUnitPlatform()
-}
-
-jlink {
-    imageZip.set(layout.buildDirectory.file("/distributions/app-${javafx.platform.classifier}.zip"))
-    options.set(listOf("--strip-debug", "--compress", "2", "--no-header-files", "--no-man-pages"))
-    launcher {
-        name = "app"
-    }
-}
-
-tasks.register<Jar>("fatJar") {
-    archiveClassifier.set("all")
-    manifest {
-        attributes["Main-Class"] = "com.example.libertyappsql.Launcher"
-    }
-    from(sourceSets.main.get().output)
-
-    dependsOn(configurations.runtimeClasspath)
-    from({
-        configurations.runtimeClasspath.get()
-            .filter { it.name.endsWith("jar") }
-            .map { zipTree(it) }
-    })
-
-    // чтобы избежать конфликтов файлов
-    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-}
-
-

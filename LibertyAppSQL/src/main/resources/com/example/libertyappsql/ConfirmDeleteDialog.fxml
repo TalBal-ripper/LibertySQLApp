@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox fx:controller="com.example.libertyappsql.controller.ConfirmDeleteController" alignment="CENTER" prefWidth="400.0" spacing="20.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <Label text="Підтвердження дії">
+            <font><Font name="System Bold" size="16.0" /></font>
+        </Label>
+        <Label fx:id="confirmMessageLabel" text="Ви впевнені, що хочете видалити обраний запис? Цю дію неможливо буде скасувати." textAlignment="CENTER" wrapText="true" />
+        <ButtonBar>
+            <buttons>
+                <Button fx:id="deleteButton" mnemonicParsing="false" style="-fx-background-color: #ff6347;" text="Так, видалити" textFill="WHITE" />
+                <Button fx:id="cancelButton" cancelButton="true" mnemonicParsing="false" text="Скасувати" />
+            </buttons>
+        </ButtonBar>
+    </children>
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+    </padding>
+</VBox>
