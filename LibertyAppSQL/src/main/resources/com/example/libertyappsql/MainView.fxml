@@ -1,150 +1,126 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Accordion?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
-<?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
-<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToolBar?>
-<?import javafx.scene.control.TreeItem?>
-<?import javafx.scene.control.TreeView?>
+<?import javafx.scene.effect.ColorAdjust?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.ClosePath?>
+<?import javafx.scene.shape.LineTo?>
+<?import javafx.scene.shape.MoveTo?>
+<?import javafx.scene.shape.Path?>
+<?import javafx.scene.shape.QuadCurveTo?>
 
-<BorderPane fx:controller="com.example.libertyappsql.controller.MainController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
-    <top>
-        <MenuBar BorderPane.alignment="CENTER">
-            <menus>
-                <Menu mnemonicParsing="false" text="Файл">
-                    <items>
-                        <MenuItem mnemonicParsing="false" text="Нове підключення..." />
-                        <MenuItem mnemonicParsing="false" text="Вийти" />
-                    </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Допомога">
-                    <items>
-                        <MenuItem mnemonicParsing="false" text="Про програму" />
-                    </items>
-                </Menu>
-            </menus>
-        </MenuBar>
-    </top>
-    <center>
-        <SplitPane dividerPositions="0.2, 0.75" focusTraversable="true" prefHeight="160.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+<AnchorPane fx:controller="com.example.libertyappsql.controller.MainController"
+            prefHeight="900.0" prefWidth="1440.0"
+            style="-fx-background-color: #e74c3c;"
+            stylesheets="@/com/example/libertyappsql/styles.css"
+            xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1">
 
+    <Pane AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+        <Path fill="#5d1f2e" opacity="0.6" strokeWidth="0"><elements><MoveTo x="0" y="400" /> <QuadCurveTo controlX="180" controlY="340" x="360" y="280" /><QuadCurveTo controlX="540" controlY="320" x="720" y="400" /> <LineTo x="1440" y="400" /><LineTo x="1440" y="900" /> <LineTo x="0" y="900" /> <ClosePath /></elements></Path>
+        <effect><ColorAdjust brightness="0.64" contrast="0.4" hue="0.1" saturation="0.25" /></effect>
+    </Pane>
+    <Pane AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+        <Path fill="#7d2d3f" opacity="0.7" strokeWidth="0"><elements><MoveTo x="0" y="500" /> <QuadCurveTo controlX="240" controlY="350" x="480" y="500" /><QuadCurveTo controlX="720" controlY="420" x="960" y="450" /> <QuadCurveTo controlX="1200" controlY="380" x="1440" y="500" /><LineTo x="1440" y="900" /> <LineTo x="0" y="900" /> <ClosePath /></elements></Path>
+        <effect><ColorAdjust brightness="0.57" contrast="1.0" hue="0.1" saturation="-0.45" /></effect>
+    </Pane>
+    <Pane AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+        <Path fill="#9d3f52" opacity="0.8" strokeWidth="0"><elements><MoveTo x="0" y="580" /> <QuadCurveTo controlX="180" controlY="420" x="360" y="550" /><QuadCurveTo controlX="540" controlY="480" x="720" y="580" /> <QuadCurveTo controlX="900" controlY="500" x="1080" y="600" /><QuadCurveTo controlX="1260" controlY="520" x="1440" y="620" /><LineTo x="1440" y="900" /> <LineTo x="0" y="900" /> <ClosePath /></elements></Path>
+        <effect><ColorAdjust brightness="0.57" contrast="1.0" hue="0.1" saturation="0.25" /></effect>
+    </Pane>
+
+    <BorderPane prefHeight="900.0" prefWidth="1440.0">
+        <top>
+            <MenuBar>
+                <menus><Menu mnemonicParsing="false" text="Файл"><items><MenuItem mnemonicParsing="false" text="Вийти"/></items></Menu></menus>
+            </MenuBar>
+        </top>
+        <center>
             <AnchorPane>
-                <children>
-                    <TreeView fx:id="dbNavigator" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                        <root>
-                            <TreeItem value="Підключення до БД">
+                <VBox styleClass="glass-panel"
+                      AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="30.0"
+                      AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="30.0">
+                    <children>
+                        <AnchorPane VBox.vgrow="ALWAYS">
+
+                            <TabPane fx:id="mainWorkspace" tabClosingPolicy="UNAVAILABLE"
+                                     AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                                     AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <tabs>
+                                    <Tab text="Перегляд даних">
+                                        <content>
+                                            <BorderPane style="-fx-background-color: transparent;">
+                                                <top>
+                                                    <ToolBar>
+                                                        <items>
+                                                            <ComboBox fx:id="tableSelector" promptText="Вибір таблиці" />
+                                                            <Button fx:id="createButton" mnemonicParsing="false" text="➕ Створити"/>
+                                                            <Button fx:id="editButton" mnemonicParsing="false" text="✏️ Редагувати"/>
+                                                            <Button fx:id="deleteButton" mnemonicParsing="false" text="🗑️ Видалити" styleClass="button-danger"/>
+                                                            <Button fx:id="printButton" mnemonicParsing="false" text="🖨️ Друкувати" styleClass="button-warning" />
+
+                                                            <TextField fx:id="searchField" promptText="🔍 Пошук..." styleClass="search-field" HBox.hgrow="ALWAYS" maxWidth="Infinity" />
+                                                        </items>
+                                                    </ToolBar>
+                                                </top>
+                                                <center>
+                                                    <TableView fx:id="dataTable"/>
+                                                </center>
+                                            </BorderPane>
+                                        </content>
+                                    </Tab>
+                                    <Tab text="SQL Редактор">
+                                        <content>
+                                            <BorderPane style="-fx-background-color: transparent;">
+                                                <top>
+                                                    <ToolBar>
+                                                        <items>
+                                                            <Button mnemonicParsing="false" text="▶️ Виконати"/>
+                                                        </items>
+                                                    </ToolBar>
+                                                </top>
+                                                <center>
+                                                    <TextArea fx:id="sqlTextArea" promptText="Вміст .sql файлу з'явиться тут..."/>
+                                                </center>
+                                            </BorderPane>
+                                        </content>
+                                    </Tab>
+                                </tabs>
+
+                            </TabPane>
+                            <VBox alignment="CENTER_RIGHT"
+                                  spacing="0"
+                                  AnchorPane.topAnchor="8.0"
+                                  AnchorPane.rightAnchor="14.0">
                                 <children>
-                                    <TreeItem value="База даних 'SalesDB'">
-                                        <children>
-                                            <TreeItem value="Таблиці">
-                                                <children>
-                                                    <TreeItem value="Customers" />
-                                                    <TreeItem value="Orders" />
-                                                </children>
-                                            </TreeItem>
-                                            <TreeItem value="Представлення" />
-                                        </children>
-                                    </TreeItem>
+                                    <Button fx:id="openSqlFileButton"
+                                            text="Обрати SQL файл"
+                                            styleClass="tab-button"
+                                            prefHeight="32"
+                                            minWidth="160"
+                                            alignment="CENTER"/>
                                 </children>
-                            </TreeItem>
-                        </root>
-                    </TreeView>
-                </children>
+                            </VBox>
+                        </AnchorPane>
+                    </children>
+                </VBox>
             </AnchorPane>
-
-            <TabPane fx:id="mainWorkspace" tabClosingPolicy="ALL_TABS">
-                <tabs>
-                    <Tab text="Таблиця: Customers">
-                        <content>
-                            <BorderPane>
-                                <top>
-                                    <ToolBar>
-                                        <items>
-                                            <Button fx:id="createButton" mnemonicParsing="false" text="➕ Створити" />
-                                            <Button fx:id="editButton" mnemonicParsing="false" text="✏️ Редагувати" />
-                                            <Button fx:id="deleteButton" mnemonicParsing="false" text="🗑️ Видалити" />
-                                        </items>
-                                    </ToolBar>
-                                </top>
-                                <center>
-                                    <TableView fx:id="dataTable">
-                                        <columns>
-                                            <TableColumn prefWidth="75.0" text="ID" />
-                                            <TableColumn prefWidth="150.0" text="FirstName" />
-                                            <TableColumn prefWidth="150.0" text="LastName" />
-                                        </columns>
-                                    </TableView>
-                                </center>
-                            </BorderPane>
-                        </content>
-                    </Tab>
-                    <Tab text="SQL Редактор">
-                        <content>
-                            <BorderPane>
-                                <top>
-                                    <ToolBar>
-                                        <items>
-                                            <Button mnemonicParsing="false" text="▶️ Виконати" />
-                                        </items>
-                                    </ToolBar>
-                                </top>
-                                <center>
-                                    <SplitPane dividerPositions="0.7" orientation="VERTICAL">
-                                        <items>
-                                            <TextArea fx:id="sqlTextArea" text="SELECT * FROM Customers;" />
-                                            <TabPane tabClosingPolicy="UNAVAILABLE">
-                                                <tabs>
-                                                    <Tab text="Результати">
-                                                        <content>
-                                                            <TableView fx:id="sqlResultTable" />
-                                                        </content>
-                                                    </Tab>
-                                                    <Tab text="Повідомлення" />
-                                                </tabs>
-                                            </TabPane>
-                                        </items>
-                                    </SplitPane>
-                                </center>
-                            </BorderPane>
-                        </content>
-                    </Tab>
-                </tabs>
-            </TabPane>
-
-            <AnchorPane>
-                <children>
-                    <Accordion AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                        <panes>
-                            <TitledPane animated="false" text="Властивості">
-                                <content>
-                                    <VBox spacing="5.0">
-                                        <children>
-                                            <Label text="Детальна інформація..." />
-                                        </children>
-                                    </VBox>
-                                </content>
-                            </TitledPane>
-                            <TitledPane animated="false" text="DDL Скрипт">
-                                <content>
-                                </content>
-                            </TitledPane>
-                        </panes>
-                    </Accordion>
-                </children>
-            </AnchorPane>
-        </SplitPane>
-    </center>
-</BorderPane>
+        </center>
+    </BorderPane>
+</AnchorPane>

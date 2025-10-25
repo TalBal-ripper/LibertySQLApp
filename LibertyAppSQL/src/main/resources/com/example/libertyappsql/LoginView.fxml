@@ -1,36 +1,158 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
-<?import javafx.scene.control.Hyperlink?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
 
-<VBox fx:controller="com.example.libertyappsql.controller.LoginController" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="350.0" spacing="15.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
-    <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-    </padding>
-    <children>
-        <Label text="Вхід в Систему">
-            <font>
-                <Font name="System Bold" size="24.0" />
-            </font>
-        </Label>
+<AnchorPane style="-fx-background-color: #e74c3c;"
+            xmlns="http://javafx.com/javafx/25"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.libertyappsql.controller.LoginController">
 
-        <Label fx:id="errorLabel" textFill="RED" />
+    <!-- ФОН -->
+    <Pane AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0"
+          AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+        <Path fill="#5d1f2e" opacity="0.6" strokeWidth="0">
+            <elements>
+                <MoveTo x="0" y="400" />
+                <QuadCurveTo controlX="180" controlY="340" x="360" y="280" />
+                <QuadCurveTo controlX="540" controlY="320" x="720" y="400" />
+                <LineTo x="1440" y="400" />
+                <LineTo x="1440" y="900" />
+                <LineTo x="0" y="900" />
+                <ClosePath />
+            </elements>
+        </Path>
+        <effect>
+            <ColorAdjust brightness="0.64" contrast="0.4" hue="0.1" saturation="0.25" />
+        </effect>
+    </Pane>
 
-        <TextField fx:id="usernameField" promptText="Ім'я користувача (admin)" />
-        <PasswordField fx:id="passwordField" promptText="Пароль (admin)" />
+    <Pane AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0"
+          AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+        <Path fill="#7d2d3f" opacity="0.7" strokeWidth="0">
+            <elements>
+                <MoveTo x="0" y="500" />
+                <QuadCurveTo controlX="240" controlY="350" x="480" y="500" />
+                <QuadCurveTo controlX="720" controlY="420" x="960" y="450" />
+                <QuadCurveTo controlX="1200" controlY="380" x="1440" y="500" />
+                <LineTo x="1440" y="900" />
+                <LineTo x="0" y="900" />
+                <ClosePath />
+            </elements>
+        </Path>
+        <effect>
+            <ColorAdjust brightness="0.57" contrast="1.0" hue="0.1" saturation="-0.45" />
+        </effect>
+    </Pane>
 
-        <CheckBox mnemonicParsing="false" text="Запам'ятати мене" />
+    <Pane AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0"
+          AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+        <Path fill="#9d3f52" opacity="0.8" strokeWidth="0">
+            <elements>
+                <MoveTo x="0" y="580" />
+                <QuadCurveTo controlX="180" controlY="420" x="360" y="550" />
+                <QuadCurveTo controlX="540" controlY="480" x="720" y="580" />
+                <QuadCurveTo controlX="900" controlY="500" x="1080" y="600" />
+                <QuadCurveTo controlX="1260" controlY="520" x="1440" y="620" />
+                <LineTo x="1440" y="900" />
+                <LineTo x="0" y="900" />
+                <ClosePath />
+            </elements>
+        </Path>
+        <effect>
+            <ColorAdjust brightness="0.57" contrast="1.0" hue="0.1" saturation="0.25" />
+        </effect>
+    </Pane>
 
-        <Button fx:id="loginButton" defaultButton="true" mnemonicParsing="false" prefWidth="200.0" text="Увійти" />
+    <!-- ЛОГІН-ПАНЕЛЬ -->
+    <StackPane AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0"
+               AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+               alignment="CENTER">
 
-        <Hyperlink text="Забули пароль?" />
-        <Hyperlink text="Створити новий акаунт" />
-    </children>
-</VBox>
+        <!-- Rectangle: фон + біла обводка -->
+        <Rectangle width="420" height="480"
+                   arcWidth="25" arcHeight="25"
+                   fill="rgba(255,255,255,0.12)"
+                   stroke="white"
+                   strokeWidth="3"/>
+
+        <!-- VBox без border-radius -->
+        <VBox alignment="CENTER" spacing="30.0"
+              maxWidth="420.0"
+              prefWidth="420.0"
+              maxHeight="480.0"
+              prefHeight="480.0">
+            <padding>
+                <Insets top="40" right="40" bottom="40" left="40"/>
+            </padding>
+
+            <children>
+                <!-- Надпис LOGIN з glow -->
+                <Label text="LOGIN"
+                       style="-fx-font-size: 60px; -fx-font-family: monospace; -fx-letter-spacing: 8px;"
+                       textFill="white"
+                       textAlignment="CENTER">
+                    <effect>
+                        <DropShadow color="#FFFFFFAA" radius="35" spread="0.25"/>
+                    </effect>
+                </Label>
+
+                <Label fx:id="errorLabel"
+                       style="-fx-font-family: monospace;"
+                       textFill="WHITE"/>
+
+                <VBox alignment="CENTER" spacing="15.0">
+                    <TextField fx:id="usernameField"
+                               promptText="USERNAME (admin)"
+                               style="-fx-background-color: rgba(255,255,255,0.1);
+                  -fx-border-color: rgba(255,255,255,0.3);
+                  -fx-text-fill: #FFFFFF;
+                  -fx-font-family: monospace;
+                  -fx-letter-spacing: 1px;
+                  -fx-font-size: 16px;
+                  -fx-padding: 10;
+                  -fx-background-radius: 15;
+                  -fx-border-radius: 15;"/>
+                    <PasswordField fx:id="passwordField"
+                                   promptText="PASSWORD (admin)"
+                                   style="-fx-background-color: rgba(255,255,255,0.1);
+                      -fx-border-color: rgba(255,255,255,0.3);
+                      -fx-text-fill: #FFFFFF;
+                      -fx-font-family: monospace;
+                      -fx-letter-spacing: 1px;
+                      -fx-font-size: 16px;
+                      -fx-padding: 10;
+                      -fx-background-radius: 15;
+                      -fx-border-radius: 15;"/>
+                </VBox>
+
+                <!-- Кнопка LOGIN з мінімальним заокругленням -->
+                <Button fx:id="loginButton"
+                        defaultButton="true"
+                        mnemonicParsing="false"
+                        prefWidth="380.0"
+                        text="LOGIN"
+                        style="-fx-background-color: #b83225;
+               -fx-text-fill: #FFFFFF;
+               -fx-font-family: monospace;
+               -fx-letter-spacing: 4px;
+               -fx-font-size: 18px;
+               -fx-padding: 12;
+               -fx-background-radius: 17;
+               -fx-border-radius: 17;">
+                    <style>
+                        .button:pressed {
+                        -fx-background-color: #9c2720;
+                        }
+                        .button:hover, .button:focused {
+                        -fx-effect: none;
+                        }
+                    </style>
+                </Button>
+            </children>
+        </VBox>
+    </StackPane>
+</AnchorPane>
