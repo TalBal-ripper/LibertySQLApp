@@ -1,10 +1,13 @@
 module com.example.libertyappsql {
     requires javafx.controls;
     requires javafx.fxml;
-
-    // Цей рядок дозволяє FXML отримувати доступ до ваших контролерів
+    requires org.hibernate.orm.core;
+    requires jakarta.persistence;
+    requires java.sql;
+    requires java.naming;
+    requires org.slf4j;
     opens com.example.libertyappsql.controller to javafx.fxml;
-
-    // Цей рядок експортує ваш пакет з лаунчером для запуску
+    opens com.example.libertyappsql.model to org.hibernate.orm.core;
     exports com.example.libertyappsql.launcher;
+    exports com.example.libertyappsql.model;
 }
