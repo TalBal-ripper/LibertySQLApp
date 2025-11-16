@@ -35,7 +35,7 @@ public class LoginController {
             currentStage.close();
 
             FXMLLoader fxmlLoader = new FXMLLoader(Launcher.class.getResource("/com/example/libertyappsql/MainView.fxml"));
-            Scene scene = new Scene(fxmlLoader.load());
+            Scene scene = new Scene(fxmlLoader.load(), 1440, 900);
 
             Stage mainStage = new Stage();
             mainStage.setTitle("Інформаційна Система");

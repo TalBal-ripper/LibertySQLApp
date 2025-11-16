@@ -19,6 +19,7 @@ import javafx.scene.Scene;
 import javafx.fxml.FXMLLoader;
 
 import java.io.File;
+import java.io.IOException;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.*;
@@ -37,14 +38,13 @@ public class MainController {
     @FXML private Button openSqlFileButton;
 
     private DatabaseManager db;
+    private ObservableList<Map<String, Object>> masterData = FXCollections.observableArrayList();
+
 
     @FXML
     private void initialize() {
         Properties props = DbConfig.load();
         db = new DatabaseManager(props);
-
-        // Тип TableView — строки как Map<columnName, value>
-        dataTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         openSqlFileButton.setOnAction(e -> chooseAndImportSql());
         tableSelector.setOnAction(e -> {
@@ -69,21 +69,18 @@ public class MainController {
 
         searchField.textProperty().addListener((obs, o, n) -> applySearch(n));
 
-        // При старте попробуем загрузить таблицы (если БД уже настроена)
         Platform.runLater(() -> refreshTablesList());
     }
 
     private void applySearch(String query) {
-        // Простой клиентский фильтр по вхождению строки в любом столбце:
-        if (query == null) query = "";
-        ObservableList<Map<String,Object>> all = dataTable.getItems();
-        if (query.isBlank()) {
-            dataTable.setItems(all);
+        if (query == null || query.isBlank()) {
+            dataTable.setItems(masterData);
             return;
         }
+
         String q = query.toLowerCase();
         ObservableList<Map<String,Object>> filtered = FXCollections.observableArrayList();
-        for (Map<String,Object> row : all) {
+        for (Map<String,Object> row : masterData) {
             for (Object v : row.values()) {
                 if (v != null && v.toString().toLowerCase().contains(q)) {
                     filtered.add(row);
@@ -130,10 +127,8 @@ public class MainController {
             ResultSetMetaData md = rs.getMetaData();
             int cols = md.getColumnCount();
 
-            // Очистка колонок
             dataTable.getColumns().clear();
 
-            // Создание колонок динамически
             List<String> colNames = new ArrayList<>();
             for (int i = 1; i <= cols; i++) {
                 String col = md.getColumnName(i);
@@ -146,10 +141,11 @@ public class MainController {
                     Object val = row.get(col);
                     return new javafx.beans.property.SimpleObjectProperty<>(val);
                 });
+
+                tc.prefWidthProperty().bind(dataTable.widthProperty().divide(cols));
                 dataTable.getColumns().add(tc);
             }
 
-            // Сбор строк
             ObservableList<Map<String,Object>> items = FXCollections.observableArrayList();
             while (rs.next()) {
                 Map<String,Object> row = new LinkedHashMap<>();
@@ -159,11 +155,14 @@ public class MainController {
                 }
                 items.add(row);
             }
-            dataTable.setItems(items);
+
+            this.masterData.clear();
+            this.masterData.addAll(items);
+            dataTable.setItems(this.masterData);
 
         } catch (SQLException e) {
             e.printStackTrace();
-            showAlert("Не удалось загрузить таблицу: " + e.getMessage());
+            showAlert("Не вдалося завантажити таблицю: " + e.getMessage());
         }
     }
 
@@ -175,7 +174,6 @@ public class MainController {
             LinkedHashMap<String,Integer> cols = db.getColumns(table);
             Optional<String> pkOpt = db.getPrimaryKeyColumn(table);
 
-            // Построим диалог с GridPane динамически
             Dialog<Map<String,Object>> dialog = new Dialog<>();
             dialog.initModality(Modality.APPLICATION_MODAL);
             dialog.setTitle(existingRow == null ? "Створити запис" : "Редагувати запис");
@@ -193,7 +191,6 @@ public class MainController {
                 Label lab = new Label(colName + ":");
                 Control input;
                 int sqlType = col.getValue();
-                // Простая эвристика по типу
                 if (sqlType == Types.DATE || sqlType == Types.TIMESTAMP) {
                     DatePicker dp = new DatePicker();
                     input = dp;
@@ -201,12 +198,10 @@ public class MainController {
                     TextField tf = new TextField();
                     input = tf;
                 }
-                // Если PK и существующая запись — показываем как disabled
                 if (pkOpt.isPresent() && pkOpt.get().equals(colName) && existingRow != null) {
                     input.setDisable(true);
                 }
 
-                // Заполняем, если редактируем
                 if (existingRow != null && existingRow.containsKey(colName)) {
                     Object v = existingRow.get(colName);
                     if (input instanceof DatePicker) {
@@ -253,20 +248,17 @@ public class MainController {
             if (res.isPresent()) {
                 Map<String,Object> values = res.get();
                 if (existingRow == null) {
-                    // remove PK if null and auto-increment
                     pkOpt.ifPresent(pk -> {
                         if (values.get(pk) == null) values.remove(pk);
                     });
                     db.insert(table, values);
                 } else {
-                    // update by PK
                     if (pkOpt.isEmpty()) {
                         showAlert("Таблиця не має PK — операція редагування недоступна");
                         return;
                     }
                     String pk = pkOpt.get();
                     Object pkValue = existingRow.get(pk);
-                    // не включаем PK в набор колонок для update
                     values.remove(pk);
                     db.updateByPK(table, pk, pkValue, values);
                 }
@@ -295,21 +287,37 @@ public class MainController {
                 return;
             }
 
-            Dialog<ButtonType> dlg = new Dialog<>();
-            dlg.setTitle("Підтвердження видалення");
-            dlg.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
-            dlg.setContentText("Ви впевнені що хочете видалити запис з " + pk + " = " + pkVal + " ?");
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/libertyappsql/ConfirmDeleteDialog.fxml"));
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initOwner(deleteButton.getScene().getWindow());
 
-            Optional<ButtonType> ans = dlg.showAndWait();
-            if (ans.isPresent() && ans.get() == ButtonType.OK) {
-                db.deleteByPK(table, pk, pkVal);
-                loadTable(table);
+            try {
+                stage.setScene(new Scene(loader.load()));
+            } catch (IOException e) {
+                e.printStackTrace();
+                showAlert("Помилка завантаження FXML: " + e.getMessage());
+                return;
             }
 
+            ConfirmDeleteController controller = loader.getController();
+            controller.setMessage("Ви впевнені, що хочете видалити запис з " + pk + " = " + pkVal + "?");
+
+            controller.setOnConfirm(() -> {
+                try {
+                    db.deleteByPK(table, pk, pkVal);
+                    loadTable(table);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    showAlert("Помилка видалення: " + e.getMessage());
+                }
+            });
+
+            stage.showAndWait();
 
         } catch (SQLException e) {
             e.printStackTrace();
-            showAlert("Помилка видалення: " + e.getMessage());
+            showAlert("Помилка SQL: " + e.getMessage());
         }
     }
 

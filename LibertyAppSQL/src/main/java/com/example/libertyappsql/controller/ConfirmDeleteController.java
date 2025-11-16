@@ -11,7 +11,7 @@ public class ConfirmDeleteController {
     @FXML private Button deleteButton;
     @FXML private Button cancelButton;
 
-    private Runnable onConfirm; // callback
+    private Runnable onConfirm;
 
     @FXML
     private void initialize() {
@@ -21,6 +21,10 @@ public class ConfirmDeleteController {
         });
 
         cancelButton.setOnAction(e -> closeWindow());
+    }
+
+    public void setMessage(String message) {
+        confirmMessageLabel.setText(message);
     }
 
     public void setOnConfirm(Runnable onConfirm) {

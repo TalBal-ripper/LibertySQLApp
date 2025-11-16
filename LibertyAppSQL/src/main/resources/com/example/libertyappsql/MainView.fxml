@@ -33,19 +33,20 @@
             xmlns:fx="http://javafx.com/fxml/1">
 
     <Pane AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-        <Path fill="#5d1f2e" opacity="0.6" strokeWidth="0"><elements><MoveTo x="0" y="400" /> <QuadCurveTo controlX="180" controlY="340" x="360" y="280" /><QuadCurveTo controlX="540" controlY="320" x="720" y="400" /> <LineTo x="1440" y="400" /><LineTo x="1440" y="900" /> <LineTo x="0" y="900" /> <ClosePath /></elements></Path>
+        <Path fill="#5d1f2e" opacity="0.6" strokeWidth="0"><elements><MoveTo x="0" y="400" /> <QuadCurveTo controlX="180" controlY="340" x="360" y="280" /><QuadCurveTo controlX="540" controlY="320" x="720" y="400" /> <LineTo x="10000" y="400" /><LineTo x="10000" y="900" /> <LineTo x="0" y="900" /> <ClosePath /></elements></Path>
         <effect><ColorAdjust brightness="0.64" contrast="0.4" hue="0.1" saturation="0.25" /></effect>
     </Pane>
     <Pane AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-        <Path fill="#7d2d3f" opacity="0.7" strokeWidth="0"><elements><MoveTo x="0" y="500" /> <QuadCurveTo controlX="240" controlY="350" x="480" y="500" /><QuadCurveTo controlX="720" controlY="420" x="960" y="450" /> <QuadCurveTo controlX="1200" controlY="380" x="1440" y="500" /><LineTo x="1440" y="900" /> <LineTo x="0" y="900" /> <ClosePath /></elements></Path>
+        <Path fill="#7d2d3f" opacity="0.7" strokeWidth="0"><elements><MoveTo x="0" y="500" /> <QuadCurveTo controlX="240" controlY="350" x="480" y="500" /><QuadCurveTo controlX="720" controlY="420" x="960" y="450" /> <QuadCurveTo controlX="1200" controlY="380" x="1440" y="500" /><LineTo x="10000" y="500" /><LineTo x="10000" y="900" /> <LineTo x="0" y="900" /> <ClosePath /></elements></Path>
         <effect><ColorAdjust brightness="0.57" contrast="1.0" hue="0.1" saturation="-0.45" /></effect>
     </Pane>
     <Pane AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-        <Path fill="#9d3f52" opacity="0.8" strokeWidth="0"><elements><MoveTo x="0" y="580" /> <QuadCurveTo controlX="180" controlY="420" x="360" y="550" /><QuadCurveTo controlX="540" controlY="480" x="720" y="580" /> <QuadCurveTo controlX="900" controlY="500" x="1080" y="600" /><QuadCurveTo controlX="1260" controlY="520" x="1440" y="620" /><LineTo x="1440" y="900" /> <LineTo x="0" y="900" /> <ClosePath /></elements></Path>
+        <Path fill="#9d3f52" opacity="0.8" strokeWidth="0"><elements><MoveTo x="0" y="580" /> <QuadCurveTo controlX="180" controlY="420" x="360" y="550" /><QuadCurveTo controlX="540" controlY="480" x="720" y="580" /> <QuadCurveTo controlX="900" controlY="500" x="1080" y="600" /><QuadCurveTo controlX="1260" controlY="520" x="1440" y="620" /><LineTo x="10000" y="620" /><LineTo x="10000" y="900" /> <LineTo x="0" y="900" /> <ClosePath /></elements></Path>
         <effect><ColorAdjust brightness="0.57" contrast="1.0" hue="0.1" saturation="0.25" /></effect>
     </Pane>
 
-    <BorderPane prefHeight="900.0" prefWidth="1440.0">
+    <BorderPane AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0"
+                AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
         <top>
             <MenuBar>
                 <menus><Menu mnemonicParsing="false" text="Файл"><items><MenuItem mnemonicParsing="false" text="Вийти"/></items></Menu></menus>

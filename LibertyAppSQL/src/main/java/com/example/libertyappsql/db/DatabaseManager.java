@@ -13,7 +13,18 @@ public class DatabaseManager {
     private final String password;
 
     public DatabaseManager(Properties props) {
-        this.url = props.getProperty("jdbc.url");
+        String baseUrl = props.getProperty("jdbc.url");
+
+        // === ВИПРАВЛЕННЯ ПОМИЛКИ "Public Key Retrieval" ===
+        // Ми перевіряємо, чи є вже такий параметр в URL, і якщо ні - додаємо.
+        // Це дозволяє драйверу отримати ключ від сервера MySQL.
+        if (baseUrl != null && !baseUrl.contains("allowPublicKeyRetrieval")) {
+            String separator = baseUrl.contains("?") ? "&" : "?";
+            baseUrl += separator + "allowPublicKeyRetrieval=true";
+        }
+        // ===================================================
+
+        this.url = baseUrl;
         this.user = props.getProperty("jdbc.user");
         this.password = props.getProperty("jdbc.password");
         try {

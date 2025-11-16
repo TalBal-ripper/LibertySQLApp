@@ -1,5 +1,10 @@
 /* === ГЛОБАЛЬНІ СТИЛІ === */
-.root { -fx-background-color: #e74c3c; }
+.root {
+    -fx-background-color: #e74c3c;
+    /* === ВИДАЛЕННЯ СИНЬОЇ ОБВОДКИ ФОКУСУ === */
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
 
 /* === ШРИФТИ ТА ТЕКСТ (без змін) === */
 .label { -fx-font-family: monospace; -fx-text-fill: white; -fx-font-size: 14px; }
