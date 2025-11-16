@@ -29,3 +29,14 @@ javafx {
 application {
     mainClass.set("com.example.libertyappsql.launcher.Launcher")
 }
+
+tasks.named<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar>("shadowJar") {
+    archiveClassifier.set("") // чтобы jar был без -all или -shadow
+    mergeServiceFiles() // важно для JavaFX и сервисов Hibernate
+    manifest {
+        attributes(mapOf(
+            "Main-Class" to application.mainClass.get()
+        ))
+    }
+}
+

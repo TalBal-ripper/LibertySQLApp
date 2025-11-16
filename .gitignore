@@ -1,5 +1,6 @@
 /lib/
 /BuildProjectApp_lin/lib/
+/BuildProjectApp_Win/lib/
 
 .gradle
 build/
