@@ -1,4 +1,5 @@
 /lib/
+/BuildProjectApp_lin/lib/
 
 .gradle
 build/

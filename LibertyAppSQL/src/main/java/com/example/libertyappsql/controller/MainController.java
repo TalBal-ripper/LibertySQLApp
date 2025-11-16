@@ -171,98 +171,37 @@ public class MainController {
         if (table == null) { showAlert("Оберіть таблицю"); return; }
 
         try {
-            LinkedHashMap<String,Integer> cols = db.getColumns(table);
             Optional<String> pkOpt = db.getPrimaryKeyColumn(table);
+            String pk = pkOpt.orElse(null);
 
-            Dialog<Map<String,Object>> dialog = new Dialog<>();
-            dialog.initModality(Modality.APPLICATION_MODAL);
-            dialog.setTitle(existingRow == null ? "Створити запис" : "Редагувати запис");
-            ButtonType save = new ButtonType("Зберегти", ButtonBar.ButtonData.OK_DONE);
-            dialog.getDialogPane().getButtonTypes().addAll(save, ButtonType.CANCEL);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/libertyappsql/RecordEditDalog.fxml"));
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initOwner(createButton.getScene().getWindow());
+            stage.setTitle(existingRow == null ? "Створити запис" : "Редагувати запис");
+            stage.setScene(new Scene(loader.load()));
 
-            GridPane grid = new GridPane();
-            grid.setVgap(8);
-            grid.setHgap(10);
+            RecordEditController controller = loader.getController();
+            controller.setPrimaryKey(pk);
+            controller.loadData(existingRow);
 
-            Map<String, Control> inputs = new LinkedHashMap<>();
-            int rowIdx = 0;
-            for (Map.Entry<String,Integer> col : cols.entrySet()) {
-                String colName = col.getKey();
-                Label lab = new Label(colName + ":");
-                Control input;
-                int sqlType = col.getValue();
-                if (sqlType == Types.DATE || sqlType == Types.TIMESTAMP) {
-                    DatePicker dp = new DatePicker();
-                    input = dp;
-                } else {
-                    TextField tf = new TextField();
-                    input = tf;
-                }
-                if (pkOpt.isPresent() && pkOpt.get().equals(colName) && existingRow != null) {
-                    input.setDisable(true);
-                }
+            stage.showAndWait();
 
-                if (existingRow != null && existingRow.containsKey(colName)) {
-                    Object v = existingRow.get(colName);
-                    if (input instanceof DatePicker) {
-                        if (v instanceof java.sql.Date) {
-                            ((DatePicker) input).setValue(((java.sql.Date) v).toLocalDate());
-                        } else if (v instanceof java.sql.Timestamp) {
-                            ((DatePicker) input).setValue(((java.sql.Timestamp) v).toLocalDateTime().toLocalDate());
-                        }
-                    } else if (input instanceof TextField) {
-                        ((TextField) input).setText(v != null ? v.toString() : "");
-                    }
-                }
+            Map<String,Object> values = controller.getResult();
+            if (values != null) {
 
-                grid.add(lab, 0, rowIdx);
-                grid.add(input, 1, rowIdx);
-                inputs.put(colName, input);
-                rowIdx++;
-            }
-
-            dialog.getDialogPane().setContent(grid);
-            Platform.runLater(() -> dialog.getDialogPane().requestFocus());
-
-            dialog.setResultConverter(btn -> {
-                if (btn == save) {
-                    Map<String,Object> result = new HashMap<>();
-                    for (String cname : inputs.keySet()) {
-                        Control cctrl = inputs.get(cname);
-                        Object val = null;
-                        if (cctrl instanceof DatePicker) {
-                            LocalDate d = ((DatePicker) cctrl).getValue();
-                            if (d != null) val = java.sql.Date.valueOf(d);
-                        } else if (cctrl instanceof TextField) {
-                            String s = ((TextField) cctrl).getText();
-                            if (s != null && !s.isEmpty()) val = s;
-                        }
-                        result.put(cname, val);
-                    }
-                    return result;
-                }
-                return null;
-            });
-
-            Optional<Map<String,Object>> res = dialog.showAndWait();
-            if (res.isPresent()) {
-                Map<String,Object> values = res.get();
                 if (existingRow == null) {
-                    pkOpt.ifPresent(pk -> {
-                        if (values.get(pk) == null) values.remove(pk);
-                    });
+                    // INSERT
+                    if (pk != null) values.remove(pk);
                     db.insert(table, values);
+
                 } else {
-                    if (pkOpt.isEmpty()) {
-                        showAlert("Таблиця не має PK — операція редагування недоступна");
-                        return;
-                    }
-                    String pk = pkOpt.get();
-                    Object pkValue = existingRow.get(pk);
+                    // UPDATE
+                    Object pkVal = existingRow.get(pk);
                     values.remove(pk);
-                    db.updateByPK(table, pk, pkValue, values);
+                    db.updateByPK(table, pk, pkVal, values);
                 }
-                refreshTablesList();
+
                 loadTable(table);
             }
 
@@ -271,6 +210,7 @@ public class MainController {
             showAlert("Помилка діалогу: " + ex.getMessage());
         }
     }
+
 
     private void confirmAndDelete(Map<String,Object> row) {
         String table = tableSelector.getValue();
