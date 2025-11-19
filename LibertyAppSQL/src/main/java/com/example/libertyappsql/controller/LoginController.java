@@ -1,6 +1,8 @@
 package com.example.libertyappsql.controller;
 
+import com.example.libertyappsql.db.DbConfig;
 import com.example.libertyappsql.launcher.Launcher;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -9,40 +11,67 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.util.Properties;
 
 public class LoginController {
+
     @FXML private TextField usernameField;
     @FXML private PasswordField passwordField;
     @FXML private Button loginButton;
     @FXML private Label errorLabel;
 
-    @FXML void initialize() {
+    @FXML
+    void initialize() {
         loginButton.setOnAction(event -> handleLogin());
     }
 
     private void handleLogin() {
-        if ("admin".equals(usernameField.getText()) && "admin".equals(passwordField.getText())) {
-            openMainWindow();
-        } else {
-            errorLabel.setText("Невірне ім'я користувача або пароль.");
+
+        String username = usernameField.getText().trim();
+        String password = passwordField.getText();
+
+        if (username.isEmpty()) {
+            errorLabel.setText("Введите имя пользователя.");
+            return;
+        }
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            Connection testConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/furniture_store_db?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC", username, password);
+
+            testConn.close();
+
+            DbConfig.CURRENT_USER = username;
+            DbConfig.CURRENT_PASSWORD = password;
+
+            openMainWindow(DbConfig.getDynamicConfig());
+
+        } catch (Exception e) {
+            errorLabel.setText("Неверный логин или пароль.");
         }
     }
 
-    private void openMainWindow() {
+    private void openMainWindow(Properties props) {
         try {
-            Stage currentStage = (Stage) loginButton.getScene().getWindow();
-            currentStage.close();
+            Stage loginStage = (Stage) loginButton.getScene().getWindow();
 
-            FXMLLoader fxmlLoader = new FXMLLoader(Launcher.class.getResource("/com/example/libertyappsql/MainView.fxml"));
-            Scene scene = new Scene(fxmlLoader.load(), 1440, 900);
+            FXMLLoader loader = new FXMLLoader(
+                    Launcher.class.getResource("/com/example/libertyappsql/MainView.fxml")
+            );
 
+            Scene scene = new Scene(loader.load(), 1440, 900);
             Stage mainStage = new Stage();
             mainStage.setTitle("Інформаційна Система");
             mainStage.setScene(scene);
             mainStage.show();
+            Platform.runLater(loginStage::close);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
 }

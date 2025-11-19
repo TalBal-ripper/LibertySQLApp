@@ -6,12 +6,9 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.geometry.VPos;
 import javafx.print.*;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -21,7 +18,6 @@ import javafx.fxml.FXMLLoader;
 import java.io.File;
 import java.io.IOException;
 import java.sql.*;
-import java.time.LocalDate;
 import java.util.*;
 
 public class MainController {
@@ -43,7 +39,7 @@ public class MainController {
 
     @FXML
     private void initialize() {
-        Properties props = DbConfig.load();
+        Properties props = DbConfig.getDynamicConfig();
         db = new DatabaseManager(props);
 
         openSqlFileButton.setOnAction(e -> chooseAndImportSql());
@@ -92,6 +88,10 @@ public class MainController {
     }
 
     private void chooseAndImportSql() {
+        if (!DbConfig.isRoot()) {
+            showAlert("У вас немає прав для імпорту SQL файлів.");
+            return;
+        }
         FileChooser chooser = new FileChooser();
         chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("SQL files", "*.sql"));
         File f = chooser.showOpenDialog((Stage) tableSelector.getScene().getWindow());
@@ -191,12 +191,10 @@ public class MainController {
             if (values != null) {
 
                 if (existingRow == null) {
-                    // INSERT
                     if (pk != null) values.remove(pk);
                     db.insert(table, values);
 
                 } else {
-                    // UPDATE
                     Object pkVal = existingRow.get(pk);
                     values.remove(pk);
                     db.updateByPK(table, pk, pkVal, values);

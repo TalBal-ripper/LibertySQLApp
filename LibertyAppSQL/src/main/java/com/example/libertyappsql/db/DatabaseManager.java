@@ -14,16 +14,10 @@ public class DatabaseManager {
 
     public DatabaseManager(Properties props) {
         String baseUrl = props.getProperty("jdbc.url");
-
-        // === ВИПРАВЛЕННЯ ПОМИЛКИ "Public Key Retrieval" ===
-        // Ми перевіряємо, чи є вже такий параметр в URL, і якщо ні - додаємо.
-        // Це дозволяє драйверу отримати ключ від сервера MySQL.
         if (baseUrl != null && !baseUrl.contains("allowPublicKeyRetrieval")) {
             String separator = baseUrl.contains("?") ? "&" : "?";
             baseUrl += separator + "allowPublicKeyRetrieval=true";
         }
-        // ===================================================
-
         this.url = baseUrl;
         this.user = props.getProperty("jdbc.user");
         this.password = props.getProperty("jdbc.password");
@@ -38,15 +32,9 @@ public class DatabaseManager {
         return DriverManager.getConnection(url, user, password);
     }
 
-    /**
-     * Выполнить SQL-скрипт (дамп). Метод поддерживает множественные запросы;
-     * учитывает простое разделение по ';' и игнорирует строки комментариев '--' и '/* ... *\/'
-     */
     public void runSqlScript(File sqlFile) throws Exception {
         String sql = readFile(sqlFile);
-        // Удалим MySQL служебные директивы типа /*!40101 ... */ — они часто есть в дампах.
         sql = sql.replaceAll("/\\*!.*?\\*/", " ");
-        // Простая разборка запросов (может не покрывать все edge-case'ы, но для типичного дампа работает).
         List<String> statements = splitSqlStatements(sql);
         try (Connection conn = getConnection()) {
             conn.setAutoCommit(false);
@@ -84,8 +72,6 @@ public class DatabaseManager {
         if (cur.toString().trim().length() > 0) out.add(cur.toString());
         return out;
     }
-
-    /** Получить список таблиц в текущем каталоге БД */
     public List<String> listTables() throws SQLException {
         try (Connection c = getConnection()) {
             DatabaseMetaData md = c.getMetaData();
@@ -98,15 +84,11 @@ public class DatabaseManager {
             return tables;
         }
     }
-
-    /** Получить ResultSet данных таблицы (используй только для чтения) */
     public ResultSet queryTable(String tableName) throws SQLException {
         Connection c = getConnection();
         Statement st = c.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
         return st.executeQuery("SELECT * FROM `" + tableName + "`");
     }
-
-    /** Удалить запись по первичному ключу (pkColumn и pkValue) */
     public void deleteByPK(String table, String pkColumn, Object pkValue) throws SQLException {
         try (Connection c = getConnection();
              PreparedStatement ps = c.prepareStatement("DELETE FROM `" + table + "` WHERE `" + pkColumn + "` = ?")) {
@@ -115,7 +97,6 @@ public class DatabaseManager {
         }
     }
 
-    /** Вставка: сформировать PreparedStatement динамически по метаданным */
     public void insert(String table, Map<String, Object> values) throws SQLException {
         String cols = values.keySet().stream().map(k -> "`" + k + "`").collect(Collectors.joining(","));
         String qMarks = values.keySet().stream().map(k -> "?").collect(Collectors.joining(","));
@@ -129,7 +110,6 @@ public class DatabaseManager {
         }
     }
 
-    /** Обновление записи по PK */
     public void updateByPK(String table, String pkColumn, Object pkValue, Map<String, Object> values) throws SQLException {
         String set = values.keySet().stream().map(k -> "`" + k + "` = ?").collect(Collectors.joining(","));
         String sql = String.format("UPDATE `%s` SET %s WHERE `%s` = ?", table, set, pkColumn);
@@ -141,7 +121,6 @@ public class DatabaseManager {
         }
     }
 
-    /** Получить первичный ключ таблицы (первый найденный) */
     public Optional<String> getPrimaryKeyColumn(String table) throws SQLException {
         try (Connection c = getConnection()) {
             DatabaseMetaData md = c.getMetaData();
@@ -154,7 +133,6 @@ public class DatabaseManager {
         return Optional.empty();
     }
 
-    /** Получить метаданные столбцов: Map<columnName, java.sql.Types> */
     public LinkedHashMap<String, Integer> getColumns(String table) throws SQLException {
         LinkedHashMap<String, Integer> map = new LinkedHashMap<>();
         try (Connection c = getConnection();
