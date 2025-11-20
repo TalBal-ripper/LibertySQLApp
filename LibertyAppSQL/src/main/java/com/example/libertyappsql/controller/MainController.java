@@ -2,6 +2,7 @@ package com.example.libertyappsql.controller;
 
 import com.example.libertyappsql.db.DatabaseManager;
 import com.example.libertyappsql.db.DbConfig;
+import com.example.libertyappsql.util.PrintPreviewDialog;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -32,6 +33,7 @@ public class MainController {
     @FXML private Button deleteButton;
     @FXML private Button printButton;
     @FXML private Button openSqlFileButton;
+    @FXML private Button exportSqlButton;
 
     private DatabaseManager db;
     private ObservableList<Map<String, Object>> masterData = FXCollections.observableArrayList();
@@ -43,6 +45,7 @@ public class MainController {
         db = new DatabaseManager(props);
 
         openSqlFileButton.setOnAction(e -> chooseAndImportSql());
+        exportSqlButton.setOnAction(e -> exportDatabase());
         tableSelector.setOnAction(e -> {
             String t = tableSelector.getValue();
             if (t != null) loadTable(t);
@@ -168,13 +171,18 @@ public class MainController {
 
     private void openRecordDialog(Map<String,Object> existingRow) {
         String table = tableSelector.getValue();
-        if (table == null) { showAlert("Оберіть таблицю"); return; }
+        if (table == null) {
+            showAlert("Оберіть таблицю");
+            return;
+        }
 
         try {
             Optional<String> pkOpt = db.getPrimaryKeyColumn(table);
             String pk = pkOpt.orElse(null);
-
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/libertyappsql/RecordEditDalog.fxml"));
+            LinkedHashMap<String, Integer> columns = db.getColumns(table);
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/com/example/libertyappsql/RecordEditDalog.fxml")
+            );
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.initOwner(createButton.getScene().getWindow());
@@ -183,17 +191,16 @@ public class MainController {
 
             RecordEditController controller = loader.getController();
             controller.setPrimaryKey(pk);
+            controller.setColumnTypes(columns);
             controller.loadData(existingRow);
 
             stage.showAndWait();
 
             Map<String,Object> values = controller.getResult();
             if (values != null) {
-
                 if (existingRow == null) {
                     if (pk != null) values.remove(pk);
                     db.insert(table, values);
-
                 } else {
                     Object pkVal = existingRow.get(pk);
                     values.remove(pk);
@@ -260,15 +267,12 @@ public class MainController {
     }
 
     private void printNode(Node node) {
-        PrinterJob job = PrinterJob.createPrinterJob();
-        if (job == null) {
-            showAlert("Неможливо створити PrinterJob на цій системі");
-            return;
-        }
-        boolean proceed = job.showPrintDialog(node.getScene().getWindow());
-        if (proceed) {
-            boolean success = job.printPage(node);
-            if (success) job.endJob();
+        if (node instanceof TableView) {
+            @SuppressWarnings("unchecked")
+            TableView<Map<String, Object>> table = (TableView<Map<String, Object>>) node;
+            Stage owner = (Stage) tableSelector.getScene().getWindow();
+
+            PrintPreviewDialog.showPreviewAndPrint(table, owner);
         }
     }
 
@@ -276,5 +280,33 @@ public class MainController {
         Alert a = new Alert(Alert.AlertType.INFORMATION, msg, ButtonType.OK);
         a.initOwner(tableSelector.getScene().getWindow());
         a.showAndWait();
+    }
+
+    private void exportDatabase() {
+        if (!DbConfig.isRoot()) {
+            showAlert("У вас немає прав для експорту бази даних.");
+            return;
+        }
+
+        FileChooser chooser = new FileChooser();
+        chooser.setInitialFileName("furniture_store_backup_" +
+                java.time.LocalDateTime.now().format(
+                        java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss")
+                ) + ".sql");
+        chooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter("SQL files", "*.sql")
+        );
+
+        File file = chooser.showSaveDialog((Stage) tableSelector.getScene().getWindow());
+        if (file == null) return;
+
+        try {
+            db.exportDatabaseToSql(file);
+            sqlTextArea.setText("✅ База даних успішно експортована в:\n" + file.getAbsolutePath());
+            showAlert("База даних експортована успішно!");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            showAlert("Помилка експорту: " + ex.getMessage());
+        }
     }
 }

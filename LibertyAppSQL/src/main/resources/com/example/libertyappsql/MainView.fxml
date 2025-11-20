@@ -105,19 +105,26 @@
                                 </tabs>
 
                             </TabPane>
-                            <VBox alignment="CENTER_RIGHT"
-                                  spacing="0"
-                                  AnchorPane.topAnchor="8.0"
-                                  AnchorPane.rightAnchor="14.0">
-                                <children>
-                                    <Button fx:id="openSqlFileButton"
-                                            text="Обрати SQL файл"
-                                            styleClass="tab-button"
-                                            prefHeight="32"
-                                            minWidth="160"
-                                            alignment="CENTER"/>
-                                </children>
-                            </VBox>
+                                <HBox spacing="5"
+                                      alignment="CENTER_RIGHT"
+                                      AnchorPane.topAnchor="8.0"
+                                      AnchorPane.rightAnchor="14.0">
+                                    <children>
+                                        <Button fx:id="openSqlFileButton"
+                                                text="📥 Імпорт SQL"
+                                                styleClass="tab-button"
+                                                prefHeight="32"
+                                                minWidth="140"
+                                                alignment="CENTER"/>
+
+                                        <Button fx:id="exportSqlButton"
+                                                text="📤 Експорт SQL"
+                                                styleClass="tab-button"
+                                                prefHeight="32"
+                                                minWidth="140"
+                                                alignment="CENTER"/>
+                                    </children>
+                                </HBox>
                         </AnchorPane>
                     </children>
                 </VBox>

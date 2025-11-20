@@ -37,130 +37,14 @@
                     <Font name="Monospaced Bold" size="20.0"/>
                 </font>
             </Label>
-
-            <!-- ScrollPane для прокрутки полей -->
             <ScrollPane fitToWidth="true"
-                        style="-fx-background-color: transparent;
-                              -fx-background: transparent;"
+                        style="-fx-background-color: transparent; -fx-background: transparent;"
                         VBox.vgrow="ALWAYS">
                 <content>
-                    <GridPane hgap="15.0" vgap="15.0">
+                    <GridPane fx:id="fieldsGrid" hgap="15.0" vgap="15.0">
                         <padding>
                             <Insets top="10" bottom="10"/>
                         </padding>
-
-                        <children>
-                            <!-- ID -->
-                            <Label text="ID:" textFill="white" GridPane.rowIndex="0">
-                                <font>
-                                    <Font name="Monospaced Regular" size="14.0"/>
-                                </font>
-                            </Label>
-                            <TextField fx:id="idField"
-                                       editable="false"
-                                       promptText="Генерується автоматично"
-                                       style="-fx-background-color: rgba(255,255,255,0.1);
-                                             -fx-border-color: rgba(255,255,255,0.3);
-                                             -fx-text-fill: #cccccc;
-                                             -fx-background-radius: 10;
-                                             -fx-border-radius: 10;"
-                                       GridPane.columnIndex="1" GridPane.rowIndex="0"/>
-
-                            <!-- Ім'я -->
-                            <Label text="Ім'я: *" textFill="white" GridPane.rowIndex="1">
-                                <font>
-                                    <Font name="Monospaced Regular" size="14.0"/>
-                                </font>
-                            </Label>
-                            <TextField fx:id="firstNameField"
-                                       promptText="Введіть ім'я"
-                                       style="-fx-background-color: rgba(255,255,255,0.1);
-                                             -fx-border-color: rgba(255,255,255,0.3);
-                                             -fx-text-fill: white;
-                                             -fx-prompt-text-fill: rgba(255,255,255,0.6);
-                                             -fx-background-radius: 10;
-                                             -fx-border-radius: 10;"
-                                       GridPane.columnIndex="1" GridPane.rowIndex="1"/>
-
-                            <!-- Прізвище -->
-                            <Label text="Прізвище:" textFill="white" GridPane.rowIndex="2">
-                                <font>
-                                    <Font name="Monospaced Regular" size="14.0"/>
-                                </font>
-                            </Label>
-                            <TextField fx:id="lastNameField"
-                                       promptText="Введіть прізвище"
-                                       style="-fx-background-color: rgba(255,255,255,0.1);
-                                             -fx-border-color: rgba(255,255,255,0.3);
-                                             -fx-text-fill: white;
-                                             -fx-prompt-text-fill: rgba(255,255,255,0.6);
-                                             -fx-background-radius: 10;
-                                             -fx-border-radius: 10;"
-                                       GridPane.columnIndex="1" GridPane.rowIndex="2"/>
-
-                            <!-- Email -->
-                            <Label text="Email:" textFill="white" GridPane.rowIndex="3">
-                                <font>
-                                    <Font name="Monospaced Regular" size="14.0"/>
-                                </font>
-                            </Label>
-                            <TextField fx:id="emailField"
-                                       promptText="example@mail.com"
-                                       style="-fx-background-color: rgba(255,255,255,0.1);
-                                             -fx-border-color: rgba(255,255,255,0.3);
-                                             -fx-text-fill: white;
-                                             -fx-prompt-text-fill: rgba(255,255,255,0.6);
-                                             -fx-background-radius: 10;
-                                             -fx-border-radius: 10;"
-                                       GridPane.columnIndex="1" GridPane.rowIndex="3"/>
-
-                            <!-- Телефон -->
-                            <Label text="Телефон:" textFill="white" GridPane.rowIndex="4">
-                                <font>
-                                    <Font name="Monospaced Regular" size="14.0"/>
-                                </font>
-                            </Label>
-                            <TextField fx:id="phoneField"
-                                       promptText="+380 XX XXX XXXX"
-                                       style="-fx-background-color: rgba(255,255,255,0.1);
-                                             -fx-border-color: rgba(255,255,255,0.3);
-                                             -fx-text-fill: white;
-                                             -fx-prompt-text-fill: rgba(255,255,255,0.6);
-                                             -fx-background-radius: 10;
-                                             -fx-border-radius: 10;"
-                                       GridPane.columnIndex="1" GridPane.rowIndex="4"/>
-
-                            <!-- Дата народження -->
-                            <Label text="Дата народж.:" textFill="white" GridPane.rowIndex="5">
-                                <font>
-                                    <Font name="Monospaced Regular" size="14.0"/>
-                                </font>
-                            </Label>
-                            <DatePicker fx:id="birthDatePicker"
-                                        promptText="Виберіть дату"
-                                        style="-fx-background-color: rgba(255,255,255,0.1);
-                                              -fx-border-color: rgba(255,255,255,0.3);
-                                              -fx-background-radius: 10;
-                                              -fx-border-radius: 10;"
-                                        GridPane.columnIndex="1" GridPane.rowIndex="5"/>
-
-                            <!-- Адреса -->
-                            <Label text="Адреса:" textFill="white" GridPane.rowIndex="6">
-                                <font>
-                                    <Font name="Monospaced Regular" size="14.0"/>
-                                </font>
-                            </Label>
-                            <TextField fx:id="addressField"
-                                       promptText="Введіть адресу"
-                                       style="-fx-background-color: rgba(255,255,255,0.1);
-                                             -fx-border-color: rgba(255,255,255,0.3);
-                                             -fx-text-fill: white;
-                                             -fx-prompt-text-fill: rgba(255,255,255,0.6);
-                                             -fx-background-radius: 10;
-                                             -fx-border-radius: 10;"
-                                       GridPane.columnIndex="1" GridPane.rowIndex="6"/>
-                        </children>
-
                         <columnConstraints>
                             <ColumnConstraints hgrow="NEVER" minWidth="120.0" prefWidth="120.0"/>
                             <ColumnConstraints hgrow="ALWAYS" minWidth="250.0"/>
