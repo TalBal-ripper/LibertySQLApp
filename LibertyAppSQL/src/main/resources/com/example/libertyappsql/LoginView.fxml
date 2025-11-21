@@ -103,7 +103,7 @@
 
                 <VBox alignment="CENTER" spacing="15.0">
                     <TextField fx:id="usernameField"
-                               promptText="USERNAME (admin)"
+                               promptText="USERNAME"
                                style="-fx-background-color: rgba(255,255,255,0.1);
                   -fx-border-color: rgba(255,255,255,0.3);
                   -fx-text-fill: #FFFFFF;
@@ -114,7 +114,7 @@
                   -fx-background-radius: 15;
                   -fx-border-radius: 15;"/>
                     <PasswordField fx:id="passwordField"
-                                   promptText="PASSWORD (admin)"
+                                   promptText="PASSWORD"
                                    style="-fx-background-color: rgba(255,255,255,0.1);
                       -fx-border-color: rgba(255,255,255,0.3);
                       -fx-text-fill: #FFFFFF;
