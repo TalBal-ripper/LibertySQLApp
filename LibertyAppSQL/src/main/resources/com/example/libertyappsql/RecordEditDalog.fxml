@@ -2,89 +2,174 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane fx:controller="com.example.libertyappsql.controller.RecordEditController"
             prefHeight="600.0" prefWidth="550.0"
-            style="-fx-background-color: linear-gradient(to bottom, #ff9a8b 0%, #ff6a88 40%, #ff4757 70%, #8b1e3f 100%);"
+            style="-fx-background-color: #e74c3c;"
             xmlns="http://javafx.com/javafx/21"
             xmlns:fx="http://javafx.com/fxml/1">
 
-    <VBox alignment="CENTER" spacing="20.0"
-          style="-fx-background-color: rgba(255,255,255,0.15);
-                 -fx-border-color: rgba(255,255,255,0.3);
-                 -fx-border-radius: 25;
-                 -fx-background-radius: 25;"
-          AnchorPane.bottomAnchor="25.0"
-          AnchorPane.leftAnchor="25.0"
-          AnchorPane.rightAnchor="25.0"
-          AnchorPane.topAnchor="25.0">
-
+    <Pane AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0"
+          AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+        <Path fill="#5d1f2e" opacity="0.6" strokeWidth="0">
+            <elements>
+                <MoveTo x="0" y="400" />
+                <QuadCurveTo controlX="180" controlY="340" x="360" y="280" />
+                <QuadCurveTo controlX="540" controlY="320" x="720" y="400" />
+                <LineTo x="10000" y="400" />
+                <LineTo x="10000" y="900" />
+                <LineTo x="0" y="900" />
+                <ClosePath />
+            </elements>
+        </Path>
         <effect>
-            <DropShadow color="#8b1e3f5e" radius="40"/>
+            <ColorAdjust brightness="0.64" contrast="0.4" hue="0.1" saturation="0.25" />
         </effect>
+    </Pane>
 
-        <padding>
-            <Insets bottom="25.0" left="25.0" right="25.0" top="25.0"/>
-        </padding>
+    <Pane AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0"
+          AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+        <Path fill="#7d2d3f" opacity="0.7" strokeWidth="0">
+            <elements>
+                <MoveTo x="0" y="500" />
+                <QuadCurveTo controlX="240" controlY="350" x="480" y="500" />
+                <QuadCurveTo controlX="720" controlY="420" x="960" y="450" />
+                <QuadCurveTo controlX="1200" controlY="380" x="1440" y="500" />
+                <LineTo x="10000" y="500" />
+                <LineTo x="10000" y="900" />
+                <LineTo x="0" y="900" />
+                <ClosePath />
+            </elements>
+        </Path>
+        <effect>
+            <ColorAdjust brightness="0.57" contrast="1.0" hue="0.1" saturation="-0.45" />
+        </effect>
+    </Pane>
 
-        <children>
-            <!-- Заголовок -->
-            <Label style="-fx-letter-spacing: 2px;" text="РЕДАГУВАННЯ ЗАПИСУ" textFill="white">
+    <Pane AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0"
+          AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+        <Path fill="#9d3f52" opacity="0.8" strokeWidth="0">
+            <elements>
+                <MoveTo x="0" y="580" />
+                <QuadCurveTo controlX="180" controlY="420" x="360" y="550" />
+                <QuadCurveTo controlX="540" controlY="480" x="720" y="580" />
+                <QuadCurveTo controlX="900" controlY="500" x="1080" y="600" />
+                <QuadCurveTo controlX="1260" controlY="520" x="1440" y="620" />
+                <LineTo x="10000" y="620" />
+                <LineTo x="10000" y="900" />
+                <LineTo x="0" y="900" />
+                <ClosePath />
+            </elements>
+        </Path>
+        <effect>
+            <ColorAdjust brightness="0.57" contrast="1.0" hue="0.1" saturation="0.25" />
+        </effect>
+    </Pane>
+
+    <StackPane AnchorPane.topAnchor="25.0" AnchorPane.bottomAnchor="25.0"
+               AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0"
+               alignment="CENTER">
+
+        <Rectangle width="500" height="550"
+                   arcWidth="25" arcHeight="25"
+                   fill="rgba(255,255,255,0.12)"
+                   stroke="white"
+                   strokeWidth="3"/>
+
+        <VBox alignment="CENTER" spacing="20.0"
+              maxWidth="500.0" prefWidth="500.0"
+              maxHeight="550.0" prefHeight="550.0">
+
+            <padding>
+                <Insets bottom="25.0" left="25.0" right="25.0" top="25.0"/>
+            </padding> <children>
+            <Label text="РЕДАГУВАННЯ" textFill="white" textAlignment="CENTER">
                 <font>
-                    <Font name="Monospaced Bold" size="20.0"/>
+                    <Font name="Monospaced Bold" size="28.0"/>
                 </font>
+                <style>
+                    -fx-letter-spacing: 4px;
+                </style>
+                <effect>
+                    <DropShadow color="#FFFFFFAA" radius="25" spread="0.3"/>
+                </effect>
             </Label>
+
             <ScrollPane fitToWidth="true"
                         style="-fx-background-color: transparent; -fx-background: transparent;"
+                        stylesheets="@/com/example/libertyappsql/styles.css"
                         VBox.vgrow="ALWAYS">
                 <content>
-                    <GridPane fx:id="fieldsGrid" hgap="15.0" vgap="15.0">
+                    <GridPane fx:id="fieldsGrid" hgap="15.0" vgap="15.0" style="-fx-background-color: transparent;">
                         <padding>
-                            <Insets top="10" bottom="10"/>
+                            <Insets top="10" bottom="10" left="5" right="5"/>
                         </padding>
                         <columnConstraints>
-                            <ColumnConstraints hgrow="NEVER" minWidth="120.0" prefWidth="120.0"/>
+                            <ColumnConstraints hgrow="NEVER" minWidth="130.0" prefWidth="130.0" halignment="RIGHT"/>
                             <ColumnConstraints hgrow="ALWAYS" minWidth="250.0"/>
                         </columnConstraints>
                     </GridPane>
                 </content>
+                <style>
+                    .scroll-pane > .viewport {
+                    -fx-background-color: transparent;
+                    }
+                    .scroll-pane {
+                    -fx-background-color: transparent;
+                    }
+                </style>
             </ScrollPane>
 
-            <!-- Кнопки -->
-            <ButtonBar>
-                <buttons>
-                    <Button fx:id="saveButton"
-                            mnemonicParsing="false"
-                            text="Зберегти"
-                            style="-fx-background-color: rgba(139,30,63,0.7);
+            <HBox spacing="15" alignment="CENTER">
+                <Button fx:id="saveButton"
+                        mnemonicParsing="false"
+                        text="ЗБЕРЕГТИ"
+                        defaultButton="true"
+                        style="-fx-background-color: #b83225;
                                    -fx-text-fill: white;
-                                   -fx-border-color: rgba(255,255,255,0.3);
-                                   -fx-background-radius: 20;
-                                   -fx-border-radius: 20;
-                                   -fx-padding: 8 20;
                                    -fx-font-family: monospace;
-                                   -fx-font-size: 14px;"/>
+                                   -fx-font-size: 16px;
+                                   -fx-padding: 10 25;
+                                   -fx-background-radius: 25;
+                                   -fx-border-radius: 25;
+                                   -fx-letter-spacing: 1px;">
+                    <style>
+                        .button:pressed {
+                        -fx-background-color: #9c2720;
+                        }
+                        .button:hover {
+                        -fx-background-color: #d13a2d;
+                        }
+                    </style>
+                </Button>
 
-                    <Button fx:id="cancelButton"
-                            mnemonicParsing="false"
-                            text="Скасувати"
-                            style="-fx-background-color: rgba(255,255,255,0.15);
+                <Button fx:id="cancelButton"
+                        mnemonicParsing="false"
+                        text="СКАСУВАТИ"
+                        cancelButton="true"
+                        style="-fx-background-color: rgba(255,255,255,0.15);
                                    -fx-text-fill: white;
-                                   -fx-border-color: rgba(255,255,255,0.3);
-                                   -fx-background-radius: 20;
-                                   -fx-border-radius: 20;
-                                   -fx-padding: 8 20;
                                    -fx-font-family: monospace;
-                                   -fx-font-size: 14px;"/>
-                </buttons>
-            </ButtonBar>
-
-            <Label text="* - обов'язкові поля"
-                   textFill="rgba(255,255,255,0.7)"
-                   style="-fx-font-family: monospace; -fx-font-size: 11px;"/>
+                                   -fx-font-size: 16px;
+                                   -fx-padding: 10 25;
+                                   -fx-background-radius: 25;
+                                   -fx-border-radius: 25;
+                                   -fx-border-color: rgba(255,255,255,0.3);
+                                   -fx-letter-spacing: 1px;">
+                    <style>
+                        .button:hover {
+                        -fx-background-color: rgba(255, 255, 255, 0.25);
+                        }
+                    </style>
+                </Button>
+            </HBox> <Label text="* - обов'язкові поля"
+                           textFill="rgba(255,255,255,0.7)"
+                           style="-fx-font-family: monospace; -fx-font-size: 12px;"/>
         </children>
-    </VBox>
+        </VBox>
+    </StackPane>
 </AnchorPane>

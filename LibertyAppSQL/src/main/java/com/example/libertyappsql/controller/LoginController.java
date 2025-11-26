@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.Properties;
 
 public class LoginController {
@@ -38,22 +39,49 @@ public class LoginController {
             errorLabel.setText("Введите имя пользователя.");
             return;
         }
+
+        String url = "jdbc:mysql://localhost:3306/furniture_store_db?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
+
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
 
-            Connection testConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/furniture_store_db?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC", username, password);
+            Connection conn = DriverManager.getConnection(url, username, password);
+            conn.close();
 
-            testConn.close();
-
+            // УСПЕШНЫЙ ВХОД
             DbConfig.CURRENT_USER = username;
             DbConfig.CURRENT_PASSWORD = password;
 
             openMainWindow(DbConfig.getDynamicConfig());
+            return;
 
-        } catch (Exception e) {
-            errorLabel.setText("Неверный логин или пароль.");
+        } catch (SQLException | ClassNotFoundException e) {
+
+            String msg = e.getMessage().toLowerCase();
+
+            // НЕТ СЕРВЕРА
+            if (msg.contains("communicat") || msg.contains("connection") || msg.contains("refused")) {
+                errorLabel.setText("❌ MySQL сервер не запущен или не установлен.");
+                return;
+            }
+
+            // БАЗЫ НЕТ
+            if (msg.contains("unknown database")) {
+                errorLabel.setText("❌ База данных furniture_store_db отсутствует.");
+                return;
+            }
+
+            // НЕВЕРНЫЙ ПАРОЛЬ / ПОЛЬЗОВАТЕЛЯ НЕТ
+            if (msg.contains("access denied")) {
+                errorLabel.setText("❌ Неверный логин или пароль.");
+                return;
+            }
+
+            // ВСЕ ОСТАЛЬНЫЕ СЛУЧАИ
+            errorLabel.setText("Ошибка подключения: " + e.getMessage());
         }
     }
+
 
     private void openMainWindow(Properties props) {
         try {
