@@ -61,19 +61,19 @@ public class LoginController {
 
             // НЕТ СЕРВЕРА
             if (msg.contains("communicat") || msg.contains("connection") || msg.contains("refused")) {
-                errorLabel.setText("❌ MySQL сервер не запущен или не установлен.");
+                errorLabel.setText("MySQL сервер не запущен или не установлен.");
                 return;
             }
 
             // БАЗЫ НЕТ
             if (msg.contains("unknown database")) {
-                errorLabel.setText("❌ База данных furniture_store_db отсутствует.");
+                errorLabel.setText("База данных furniture_store_db отсутствует.");
                 return;
             }
 
             // НЕВЕРНЫЙ ПАРОЛЬ / ПОЛЬЗОВАТЕЛЯ НЕТ
             if (msg.contains("access denied")) {
-                errorLabel.setText("❌ Неверный логин или пароль.");
+                errorLabel.setText("Неверный логин или пароль.");
                 return;
             }
 
