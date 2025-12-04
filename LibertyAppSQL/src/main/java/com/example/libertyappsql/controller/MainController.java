@@ -302,7 +302,7 @@ public class MainController {
 
         try {
             db.exportDatabaseToSql(file);
-            sqlTextArea.setText("✅ База даних успішно експортована в:\n" + file.getAbsolutePath());
+            sqlTextArea.setText("База даних успішно експортована в:\n" + file.getAbsolutePath());
             showAlert("База даних експортована успішно!");
         } catch (Exception ex) {
             ex.printStackTrace();

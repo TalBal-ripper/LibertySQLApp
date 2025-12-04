@@ -1,20 +1,15 @@
-/* === ГЛОБАЛЬНІ СТИЛІ === */
 .root {
     -fx-background-color: #e74c3c;
-    /* === ВИДАЛЕННЯ СИНЬОЇ ОБВОДКИ ФОКУСУ === */
     -fx-focus-color: transparent;
     -fx-faint-focus-color: transparent;
 }
 
-/* === ШРИФТИ ТА ТЕКСТ (без змін) === */
 .label { -fx-font-family: monospace; -fx-text-fill: white; -fx-font-size: 14px; }
 .h1-label { -fx-font-family: monospace; -fx-text-fill: white; -fx-font-size: 60px; -fx-letter-spacing: 8px; -fx-effect: dropshadow(gaussian, #FFFFFFAA, 35, 0.25, 0, 0); }
 .h2-label { -fx-font-family: monospace; -fx-text-fill: white; -fx-font-size: 24px; -fx-letter-spacing: 2px; -fx-effect: dropshadow(gaussian, #FFFFFFAA, 25, 0.3, 0, 0); }
 
-/* === ОСНОВНА ПАНЕЛЬ "СКЛО" (без змін) === */
 .glass-panel { -fx-background-color: rgba(255, 255, 255, 0.12); -fx-background-radius: 25; -fx-border-color: white; -fx-border-width: 3px; -fx-border-radius: 25; -fx-effect: dropshadow(gaussian, rgba(45,10,20,0.3), 20, 0.1, 0, 0); }
 
-/* === КНОПКИ (без змін) === */
 .button { -fx-text-fill: #FFFFFF; -fx-font-family: monospace; -fx-font-size: 16px; -fx-padding: 10 20; -fx-background-radius: 25; -fx-border-radius: 25; -fx-cursor: hand; }
 .button-primary, .button-primary:focused { -fx-background-color: #b83225; -fx-letter-spacing: 2px; -fx-effect: null; }
 .button-primary:hover { -fx-background-color: #d13a2d; }
@@ -23,15 +18,12 @@
 .button-secondary:hover { -fx-background-color: rgba(255, 255, 255, 0.25); }
 .button-secondary:pressed { -fx-background-color: rgba(255, 255, 255, 0.1); }
 
-/*
- * === КЛАС .tab-button - СКЛЯНИЙ, ВПАДАЮЧИЙ В ПАНЕЛЬ ===
- */
 .tab-button, .tab-button:focused {
     -fx-background-color: rgba(255, 255, 255, 0.15) !important;
     -fx-border-color: rgba(255, 255, 255, 0.3) !important;
-    -fx-border-width: 2px 2px 0 2px; /* Рамка тільки зверху та по боках */
-    -fx-background-radius: 12.5 12.5 0 0; /* Верхні кути заокруглені, нижні - прямі */
-    -fx-border-radius: 12.5 12.5 0 0; /* Те ж саме для рамки */
+    -fx-border-width: 2px 2px 0 2px;
+    -fx-background-radius: 12.5 12.5 0 0;
+    -fx-border-radius: 12.5 12.5 0 0;
     -fx-text-fill: white;
     -fx-font-family: monospace;
     -fx-font-size: 16px;
@@ -52,27 +44,20 @@
     -fx-background-color: rgba(255, 255, 255, 0.1) !important;
 }
 
-/* Легке опускання, щоб кнопка "вливалася" у верхню панель (збільшено зміщення) */
 .tab-button {
-    -fx-translate-y: 2; /* Збільшено, щоб краще зливалось з панеллю */
+    -fx-translate-y: 2;
 }
 
 .button-graphic-label-main { -fx-font-family: monospace; -fx-text-fill: white; -fx-font-size: 14px; -fx-letter-spacing: 1px; }
 .button-graphic-label-sub { -fx-font-family: monospace; -fx-font-style: italic; -fx-font-size: 12px; -fx-text-fill: rgba(255, 255, 255, 0.8); }
 
-
-/* === ПОЛЯ ВВЕДЕННЯ (без змін) === */
 .text-field, .password-field, .text-field:focused, .password-field:focused { -fx-background-color: rgba(255, 255, 255, 0.1); -fx-border-color: rgba(255, 255, 255, 0.3); -fx-text-fill: #FFFFFF; -fx-font-family: monospace; -fx-letter-spacing: 1px; -fx-font-size: 14px; -fx-padding: 10; -fx-background-radius: 15; -fx-border-radius: 15; -fx-effect: null; }
 .text-field:prompt-text, .password-field:prompt-text { -fx-fill: rgba(255, 255, 255, 0.7); }
 .text-field:disabled { -fx-opacity: 0.7; -fx-text-fill: #cccccc; }
 
-/* === СТИЛІ ВКЛАДОК (TABPANE) === */
 .tab-pane { -fx-background-color: transparent; -fx-padding: 0; }
 
-/* === Змінено padding === */
 .tab-header-area {
-    /* (відступ зверху, відступ справа, відступ знизу, відступ зліва) */
-    /* 220px справа - це місце для помаранчевої кнопки */
     -fx-padding: 5px 220px 0 20px;
     -fx-border-color: transparent transparent rgba(255, 255, 255, 0.3) transparent;
     -fx-border-width: 2px;
@@ -83,7 +68,6 @@
 .tab:selected { -fx-background-color: rgba(255, 255, 255, 0.2); -fx-border-color: white; }
 .tab-content-area { -fx-background-color: rgba(255, 255, 255, 0.2); -fx-background-radius: 0 0 22 22; -fx-border-width: 0; -fx-padding: 0; }
 
-/* === ОНОВЛЕНА ПАНЕЛЬ ІНСТРУМЕНТІВ (TOOLBAR) === */
 .tool-bar {
     -fx-background-color: transparent;
     -fx-padding: 5px 10px;
@@ -91,24 +75,18 @@
     -fx-border-width: 0;
 }
 
-/* Базовий стиль "скляної" кнопки */
 .tool-bar .button, .tool-bar .button:focused { -fx-background-color: rgba(255, 255, 255, 0.15); -fx-border-color: rgba(255, 255, 255, 0.3); -fx-text-fill: white; -fx-font-size: 14px; -fx-font-family: monospace; -fx-padding: 5 10; -fx-alignment: CENTER; -fx-effect: null; }
 .tool-bar .button:hover { -fx-background-color: rgba(255, 255, 255, 0.25); }
 .tool-bar .button:pressed { -fx-background-color: rgba(255, 255, 255, 0.1); }
 
-/* Червона кнопка */
 .tool-bar .button-danger, .tool-bar .button-danger:focused { -fx-background-color: #b83225; -fx-border-color: rgba(255, 255, 255, 0.3); -fx-effect: null; }
 .tool-bar .button-danger:hover { -fx-background-color: #d13a2d; }
 .tool-bar .button-danger:pressed { -fx-background-color: #9c2720; }
 
-/* Жовта кнопка */
 .tool-bar .button-warning, .tool-bar .button-warning:focused { -fx-background-color: #f39c12; -fx-border-color: rgba(255, 255, 255, 0.5); -fx-effect: null; }
 .tool-bar .button-warning:hover { -fx-background-color: #f1c40f; }
 .tool-bar .button-warning:pressed { -fx-background-color: #e67e22; }
 
-
-/* === ЗМІНА ТУТ === */
-/* ComboBox на панелі (висота виправлена) */
 .tool-bar .combo-box, .tool-bar .combo-box:focused {
     -fx-pref-width: 180px;
     -fx-background-color: rgba(255, 255, 255, 0.15);
@@ -117,47 +95,39 @@
     -fx-border-radius: 25;
     -fx-font-family: monospace;
     -fx-font-size: 14px;
-    -fx-padding: 5 10; /* Було '5 5' */
+    -fx-padding: 5 10;
     -fx-effect: null;
 }
 .tool-bar .combo-box:hover { -fx-background-color: rgba(255, 255, 255, 0.25); }
 .tool-bar .combo-box .text-field { -fx-background-color: transparent; -fx-border-color: transparent; -fx-text-fill: white; -fx-prompt-text-fill: rgba(255, 255, 255, 0.7); -fx-font-family: monospace; -fx-padding: 0; }
-/* === ЗМІНА ТУТ === */
 .tool-bar .combo-box .arrow {
     -fx-background-color: white;
     -fx-scale-x: 0.7;
     -fx-scale-y: 0.7;
-    -fx-padding: 5; /* Було '8' */
+    -fx-padding: 5;
 }
 .combo-box-popup .list-view { -fx-background-color: rgba(50,50,50,0.95); -fx-border-color: rgba(255,255,255,0.2); -fx-background-insets: 0; }
 .combo-box-popup .list-cell { -fx-text-fill: white; -fx-background-color: transparent; -fx-font-family: monospace; }
 .combo-box-popup .list-cell:hover, .combo-box-popup .list-cell:selected { -fx-background-color: #b83225; }
 
-
-/*
- * === Поле Пошуку на панелі (без змін) ===
- */
 .search-field,
 .search-field:focused
 {
-    /* -fx-pref-width: 350px; <-- ЦЕЙ РЯДОК ВИДАЛЕНО! */
     -fx-background-color: rgba(255, 255, 255, 0.15);
     -fx-border-color: rgba(255, 255, 255, 0.3);
     -fx-background-radius: 25;
     -fx-border-radius: 25;
     -fx-font-family: monospace;
     -fx-font-size: 14px;
-    -fx-padding: 5 12; /* "Тонкий" і з відступом для тексту (вертикальний як у кнопок) */
+    -fx-padding: 5 12;
     -fx-prompt-text-fill: rgba(255, 255, 255, 0.7);
     -fx-text-fill: white;
-    -fx-effect: null; /* Прибираємо обвідку фокусу */
+    -fx-effect: null;
 }
 .search-field:hover {
     -fx-background-color: rgba(255, 255, 255, 0.25);
 }
 
-
-/* === ТАБЛИЦЯ (TABLEVIEW) (без змін) === */
 .table-view { -fx-background-color: transparent; -fx-padding: 0; }
 .table-view .viewport { -fx-background-color: transparent; }
 .table-view .column-header-background { -fx-background-color: rgba(0, 0, 0, 0.2); }
@@ -168,12 +138,10 @@
 .table-view .table-row-cell:odd { -fx-background-color: rgba(255, 255, 255, 0.05); }
 .table-view .table-row-cell:selected { -fx-background-color: rgba(184, 50, 37, 0.7); }
 
-/* === ТЕКСТОВЕ ПОЛЕ (TEXTAREA) (без змін) === */
 .text-area { -fx-background-color: transparent; -fx-font-family: "Consolas", monospace; -fx-text-fill: white; }
 .text-area .content { -fx-background-color: rgba(0, 0, 0, 0.2); -fx-background-radius: 0 0 20 20; }
 .text-area .scroll-pane, .text-area .scroll-pane .viewport { -fx-background-color: transparent; }
 
-/* === ІНШІ ЕЛЕМЕНТИ (без змін) === */
 .menu-bar { -fx-background-color: rgba(0, 0, 0, 0.2); }
 .menu-bar .label { -fx-text-fill: white; }
 .menu-bar .menu-item:focused, .context-menu .menu-item:focused { -fx-background-color: #b83225; }

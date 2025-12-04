@@ -191,7 +191,7 @@ public class RecordEditController {
                             try {
                                 value = Integer.parseInt(text);
                             } catch (NumberFormatException e) {
-                                value = text; // Залишаємо як текст
+                                value = text;
                             }
                         } else if (sqlType == Types.DECIMAL || sqlType == Types.DOUBLE ||
                                 sqlType == Types.FLOAT || sqlType == Types.NUMERIC) {

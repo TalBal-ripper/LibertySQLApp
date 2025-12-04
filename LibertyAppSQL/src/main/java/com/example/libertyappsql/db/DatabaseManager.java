@@ -64,7 +64,7 @@ public class DatabaseManager {
                         successCount++;
                     } catch (SQLException e) {
                         errorCount++;
-                        System.err.println("⚠ Помилка виконання запиту:");
+                        System.err.println("Помилка виконання запиту:");
                         System.err.println("   " + (trimmed.length() > 100 ?
                                 trimmed.substring(0, 100) + "..." : trimmed));
                         System.err.println("   Помилка: " + e.getMessage());
@@ -77,7 +77,7 @@ public class DatabaseManager {
                 st.execute("SET FOREIGN_KEY_CHECKS = 1");
             }
 
-            System.out.println("\n✅ Імпорт завершено:");
+            System.out.println("\nІмпорт завершено:");
             System.out.println("   Успішно: " + successCount);
             System.out.println("   Помилок: " + errorCount);
         }

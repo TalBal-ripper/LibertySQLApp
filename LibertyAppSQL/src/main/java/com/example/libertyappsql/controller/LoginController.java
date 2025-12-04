@@ -36,7 +36,7 @@ public class LoginController {
         String password = passwordField.getText();
 
         if (username.isEmpty()) {
-            errorLabel.setText("Введите имя пользователя.");
+            errorLabel.setText("Введіть ім'я користувача.");
             return;
         }
 
@@ -48,7 +48,6 @@ public class LoginController {
             Connection conn = DriverManager.getConnection(url, username, password);
             conn.close();
 
-            // УСПЕШНЫЙ ВХОД
             DbConfig.CURRENT_USER = username;
             DbConfig.CURRENT_PASSWORD = password;
 
@@ -59,26 +58,22 @@ public class LoginController {
 
             String msg = e.getMessage().toLowerCase();
 
-            // НЕТ СЕРВЕРА
             if (msg.contains("communicat") || msg.contains("connection") || msg.contains("refused")) {
-                errorLabel.setText("MySQL сервер не запущен или не установлен.");
+                errorLabel.setText("MySQL сервер не запущено або не підключено.");
                 return;
             }
 
-            // БАЗЫ НЕТ
             if (msg.contains("unknown database")) {
-                errorLabel.setText("База данных furniture_store_db отсутствует.");
+                errorLabel.setText("База даних furniture_store_db відсутня.");
                 return;
             }
 
-            // НЕВЕРНЫЙ ПАРОЛЬ / ПОЛЬЗОВАТЕЛЯ НЕТ
             if (msg.contains("access denied")) {
-                errorLabel.setText("Неверный логин или пароль.");
+                errorLabel.setText("Невірний лоігн або пароль.");
                 return;
             }
 
-            // ВСЕ ОСТАЛЬНЫЕ СЛУЧАИ
-            errorLabel.setText("Ошибка подключения: " + e.getMessage());
+            errorLabel.setText("Помилка підключення: " + e.getMessage());
         }
     }
 
